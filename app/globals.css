@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+:root {
+  --background: #15110e;
+  --foreground: #f3e9dc;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-panel: #201913;
+  --color-line: #3b2f26;
+  --color-muted: #b3a493;
+  --color-amber: #f2a541;
+  --color-amber-deep: #d98a24;
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-instrument-serif);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ---------- Record: a sleeve with the disc peeking out ---------- */
+
+.record {
+  position: relative;
+  aspect-ratio: 1;
+  container-type: inline-size;
+}
+
+.record-disc {
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  width: 94%;
+  height: 94%;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 20deg,
+      transparent 0deg,
+      rgba(255, 255, 255, 0.09) 30deg,
+      transparent 70deg,
+      transparent 180deg,
+      rgba(255, 255, 255, 0.07) 210deg,
+      transparent 250deg
+    ),
+    repeating-radial-gradient(
+      circle closest-side,
+      #0c0b0a 0,
+      #0c0b0a 1.6%,
+      #1b1917 2%,
+      #0c0b0a 2.6%
+    );
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform: translateX(22%);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.record-label {
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle closest-side, #0c0b0a 0 9%, transparent 10%),
+    radial-gradient(
+      circle closest-side,
+      hsl(var(--label-hue) 70% 58%) 0 70%,
+      hsl(var(--label-hue) 60% 44%) 71%
+    );
+}
+
+.record:hover .record-disc {
+  transform: translateX(46%) rotate(60deg);
+}
+
+.record-sleeve {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #2a221c;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Light catching the edge of the cardboard sleeve. */
+.record-sleeve::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    transparent 28%,
+    transparent 72%,
+    rgba(0, 0, 0, 0.18) 100%
+  );
+}
+
+.sleeve-fallback {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 3cqw;
+  padding: 9cqw;
+  background:
+    radial-gradient(
+      circle at 75% 25%,
+      hsl(var(--hue) 75% 62%) 0 22%,
+      transparent 23%
+    ),
+    linear-gradient(
+      160deg,
+      hsl(var(--hue) 45% 34%),
+      hsl(calc(var(--hue) + 40) 40% 18%)
+    );
+  color: #fbf3e8;
+}
+
+.sleeve-fallback-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 13cqw;
+  line-height: 1;
+}
+
+.sleeve-fallback-artist {
+  overflow: hidden;
+  font-size: 6.5cqw;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+/* ---------- Wall: the exported wallpaper ---------- */
+
+.wall {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 50% 0%,
+      rgba(255, 196, 128, 0.2),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 90% 60% at 50% 110%,
+      rgba(0, 0, 0, 0.55),
+      transparent 70%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.012) 0,
+      rgba(255, 255, 255, 0.012) 2px,
+      transparent 2px,
+      transparent 7px
+    ),
+    linear-gradient(180deg, #2b2119 0%, #1a1410 100%);
+}
+
+.wall-ledge {
+  position: relative;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    #a7724b 0%,
+    #7d4f31 35%,
+    #5a3720 100%
+  );
+  box-shadow:
+    0 14px 22px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 220, 180, 0.35);
+}
+
+.wall-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: 32px;
+  color: rgba(243, 233, 220, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .record-disc {
+    transition: none;
+  }
+}
